@@ -1,0 +1,69 @@
+**Nahom Z Wodajo**
+
+**Contact Information:**
+- **Phone:** 240-429-1807
+- **Email:** nahomiyoz@gmail.com
+- **LinkedIn:** [linkedin.com/in/nahom-wodajo-a7883380](https://www.linkedin.com/in/nahom-wodajo-a7883380)
+- **Location:** San Diego, CA, USA
+
+---
+
+**Professional Summary:**
+
+Innovative Data Scientist with over three years of experience in developing machine learning models and advancing solutions for complex data challenges. Proven expertise in creating data pipelines, statistical analysis, and implementing MLOps practices in production environments. Strong proficiency in Python and SQL, with a solid understanding of healthcare data concepts. Adept at working independently and collaboratively in agile environments to drive data-driven decision-making. Dedicated to leveraging advanced data technologies to simplify healthcare, improve customer experiences, and contribute to business success.
+
+---
+
+**Skills:**
+
+- **Programming Languages:** Python, SQL, R, Spark, Java (moderate)
+- **Machine Learning & Data Science:** Scikit Learn, TensorFlow, Keras, MLOps tools (MLflow, SageMaker), Statistical Methods
+- **Data Engineering:** ETL, Apache Spark, Azure Data Factory, Hadoop
+- **Cloud Platforms:** Azure, AWS
+- **Data Visualization:** PowerBI, Tableau
+- **Big Data Technologies:** Spark, Databricks
+- **Healthcare Data Understanding:** Claims/EHR data, ICD, CPT
+- **Additional Skills:** Agile Methods, Docker, Model Governance, Leadership, Communication
+
+---
+
+**Relevant Experience:**
+
+**Trimark Associates, Folsom, CA**
+*Data Scientist/Engineer*
+*June 2020 - Present*
+- Developed and deployed machine learning models for various data science projects, reducing reporting run times and improving model performance.
+- Optimized data pipelines for healthcare data analysis using Spark, supporting model development on complex data sets.
+- Implemented MLOps best practices, including model deployment, monitoring, and management in production environments.
+- Built robust machine learning pipelines to detect and rectify anomalies in large data structures using statistical methods.
+- Created data pipelines to source new data, enhancing model accuracy and predictive capabilities.
+- Migrated SQL-stored procedures to Python, facilitating improved data handling and process efficiency.
+
+**Meinti Construction Company, Ethiopia**
+*Data/Estimation Engineer*
+*September 2015 - December 2017*
+- Led the development of data analysis pipelines for project estimation, driving successful execution.
+- Managed project scheduling and resource allocation to optimize project delivery.
+
+**Academic Coach, CollegeTrack-San Francisco**
+*August 2019 - January 2020*
+- Assisted students in applying advanced statistical techniques using MS Excel to solve quantitative problems.
+
+---
+
+**Education:**
+- **Master of Data Science, Eastern University**, Pennsylvania, USA
+  *April 2021 - Present*
+
+- **BSc in Civil and Environmental Engineering, Addis Ababa Institute of Technology**, Addis Ababa University, Ethiopia
+  *September 2009 - February 2015*
+
+---
+
+**Certifications:**
+- Machine Learning Certification
+- Data Science Professional Certification
+
+---
+
+This resume highlights Nahom's alignment with the Experian data scientist role, focusing on healthcare data handling, machine learning expertise, and MLOps practice implementation.

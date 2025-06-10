@@ -1,0 +1,22 @@
+**Missing Skills/Experience:**
+- Specific knowledge or mention of healthcare concepts, terminologies, and data such as claims/EHR data, ICD, CPT.
+- Specific detail on experience with model governance including model versioning and experiment tracking.
+- Explicit mention of designing experiments with appropriate documentation and cataloging.
+- Degree(s) specifically in Machine Learning, Data Science, Statistics, Computer Science, Computer Engineering, Electrical Engineering, Physics, Applied Math, or other quantitative fields (as the master's program is in progress, this could suffice but is worth clarifying).
+
+**Suggested Questions for Resume Improvement:**
+- Can you elaborate on your experience with model governance, specifically model versioning and experiment tracking?
+- Do you have experience with healthcare data, such as claims/EHR data, ICD, or CPT? If so, could you provide more details?
+- Have you been involved in designing and documenting experiments in your data science projects? Please provide examples.
+- Could you clarify your background in statistical methods and data mining techniques and how you have applied them to real-world problems?
+- Your master's program in data science is ongoing; could you provide more insight into specific courses or projects that align with Experian's needs?
+
+**Strengths in Resume:**
+- Strong proficiency in Python, SQL, and big data technologies such as Spark.
+- Demonstrated experience in implementing MLOps best practices, including MLflow and Docker for deployment.
+- Proven ability to independently develop models using large and complex data structures.
+- Experience in building data pipelines to source new data, which aligns with full-stack data scientist responsibilities.
+- Clear results-driven experience, including measurable impacts like the reduction in compute costs and increase in successful project bids.
+- Good balance between technical skills and interpersonal abilities such as critical thinking and problem-solving.
+
+The candidate's resume is quite strong, particularly in the areas of MLOps practices, data pipeline development, and independent work with large datasets. Clarifying healthcare-related data experience and involvement in model governance and experiment documentation could further enhance alignment with the job description.

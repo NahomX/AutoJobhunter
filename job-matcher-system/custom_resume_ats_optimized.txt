@@ -1,0 +1,63 @@
+**Nahom Z Wodajo**
+
+**Contact Information:**
+- **Phone:** 240-429-1807
+- **Email:** nahomiyoz@gmail.com
+- **LinkedIn:** [linkedin.com/in/nahom-wodajo-a7883380](https://www.linkedin.com/in/nahom-wodajo-a7883380)
+- **Location:** San Diego, CA
+
+---
+
+**Professional Summary:**
+
+Innovative and results-driven Data Scientist with over three years of industry experience in developing predictive modeling and machine learning solutions. Skilled in leveraging advanced data analysis, statistical methods, and MLOps practices for deploying robust models in production environments. Experienced in building full-stack data science solutions from ideation through production with strong expertise in Python, SQL, and big data technologies such as Spark. Proven ability to work independently on complex and large datasets, with specific interest in advancing healthcare analytics and operational efficiencies.
+
+---
+
+**Skills:**
+
+- **Programming Languages:** Python, SQL, R, USQL, Spark, Java, JavaScript
+- **Data Science & MLOps:** Machine Learning Models, Predictive Modeling, Statistical Analysis, MLflow, Sagemaker
+- **Big Data & Cloud Technologies:** Apache Spark, Hadoop, Azure Data Factory, AWS Redshift
+- **Data Analysis & Visualization:** PowerBI, Tableau, SSRS, Prophet, Pandas, Numpy
+- **Databases & Platforms:** MS SQL Server, Azure Synapse, RStudio, Databricks, Docker
+- **Interpersonal:** Agile Methods, Critical Thinking, Problem Solving, Communication
+
+---
+
+**Relevant Experience:**
+
+**Trimark Associates, Folsom, CA**  
+*Data Scientist/Engineer*  
+*June 2020 - Present*
+- Spearheaded the development of KPI algorithms and Azure pipelines enhancing the operational efficiency of healthcare data analytics.
+- Engineered machine learning models to proactively detect and mitigate data anomalies, improving the quality of large-scale healthcare datasets.
+- Implemented MLOps best practices, including model versioning and deployment using MLflow, ensuring seamless model integration and monitoring.
+- Optimized SQL calculations for healthcare-related dashboards and reports, reducing processing time by 30% and increasing data accessibility.
+- Automated ETL processes with Apache Spark, achieving a 15% reduction in compute costs while maintaining accuracy and speed.
+- Enhanced team productivity by containerizing projects using Docker for faster, reliable deployments.
+
+**Meinti Construction Company, Ethiopia**  
+*Data/Estimation Engineer*  
+*September 2015 - December 2017*
+- Developed comprehensive ETL pipelines to streamline material and labor cost analysis, enhancing the precision of bid estimations.
+- Applied predictive analytics to assess market trends, contributing to a 25% increase in successful project bids.
+- Led electronic resource allocation and scheduling efforts, ensuring project completions within budget and timelines.
+
+**Academic Coach, CollegeTrack-San Francisco**  
+*August 2019 - January 2020*
+- Provided tutoring in advanced MS Excel and data analysis to college students, significantly improving their academic performance.
+
+---
+
+**Education:**
+
+- **Master of Data Science, Eastern University**, Pennsylvania, USA  
+  *April 2021 - Present*
+
+- **BSc in Civil and Environmental Engineering, Addis Ababa Institute of Technology**, Addis Ababa University, Ethiopia  
+  *September 2009 - February 2015*
+
+---
+
+This resume is optimized to align with the key responsibilities and qualifications highlighted in the Experian job description, integrating relevant skills and experiences to enhance compatibility with ATS.

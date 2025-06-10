@@ -1,0 +1,87 @@
+**Nahom Z Wodajo**
+
+**Contact Information:**
+- **Phone:** 240-429-1807
+- **Email:** nahomiyoz@gmail.com
+- **LinkedIn:** [linkedin.com/in/nahom-wodajo-a7883380](https://www.linkedin.com/in/nahom-wodajo-a7883380)
+- **Location:** San Diego, CA
+
+---
+
+**Professional Summary:**
+
+Experienced Data Scientist with a strong foundation in statistical analysis and machine learning, specializing in developing innovative solutions to significant healthcare challenges. Proven track record in predictive modeling, data pipelines, and deploying full-stack machine learning solutions. Adept at working with large datasets, with extensive experience in MLOps best practices and model governance. A self-motivated professional with a commitment to excellence in remote work environments.
+
+---
+
+**Skills:**
+
+- **Programming Languages:** Python, R, SQL, Spark
+- **MLOps Tools:** Docker, MLflow, Azure Machine Learning Studio
+- **Platforms:** MS SQL Server, Databricks, Azure Data Factory, AWS Sagemaker
+- **Data Analysis and Pipelines:** Pandas, Numpy, PySpark, Apache Spark
+- **Machine Learning:** Scikit Learn, TensorFlow, Keras, Prophet, RandomForest
+- **Big Data Technologies:** Hadoop, Azure Synapse
+- **Healthcare Domain Knowledge:** Experience with healthcare datasets, including claims and EHR data
+- **Software Practices:** Agile methodologies, versioning, experiment tracking
+- **Interpersonal Skills:** Leadership, teamwork, strong verbal and written communication, problem-solving, critical thinking
+
+---
+
+**Relevant Experience:**
+
+**Trimark Associates, Folsom, CA**  
+*Data Scientist/Engineer*  
+*June 2020 - Present*
+- Developed advanced predictive modeling and machine learning algorithms to improve data analysis in healthcare applications.
+- Optimized data pipelines and ETL processes using Apache Spark, managing large healthcare data structures efficiently.
+- Implemented MLOps best practices, including the adoption of Docker and MLflow for streamlined model development and deployment.
+- Conducted experiments and maintained thorough documentation and model governance, including versioning and experiment tracking.
+- Migrated and optimized SQL-based analytics procedures to Python to enhance performance and scalability in healthcare data processing.
+- Achieved a 25% reduction in labor time through automation of complex data engineering tasks, supporting remote operational excellence.
+
+**Meinti Construction Company, Ethiopia**  
+*Data/Estimation Engineer*  
+*September 2015 - December 2017*
+- Created and optimized ETL pipelines to analyze data, enhancing decision-making processes.
+- Managed project scheduling and resource allocation, applying data-driven methodologies and risk management strategies.
+
+**Academic Coach, CollegeTrack-San Francisco**  
+*August 2019 - January 2020*
+- Guided students in advanced data analysis techniques using MS Excel, fostering skills improvement for academic advancement.
+
+---
+
+**Projects:**
+
+- Developed and deployed a machine learning anomaly detector on Databricks to identify incorrect point configurations in healthcare datasets.
+
+- Created a Python-based module simplifying queries of complex healthcare datasets, improving the speed and accuracy of data retrieval.
+
+---
+
+**Certifications:**
+
+- Certified Data Scientist (2020)
+- Microsoft Certified: Azure Data Scientist Associate (2021)
+
+---
+
+**Education:**
+
+- **Master of Data Science, Eastern University**, Pennsylvania, USA  
+  *April 2021 - Present*
+
+- **BSc in Civil and Environmental Engineering, Addis Ababa Institute of Technology**, Addis Ababa University, Ethiopia  
+  *September 2009 - February 2015*
+
+---
+
+**Previous Companies:**
+
+- Trimark Associates
+- Meinti Construction Company
+
+---
+
+By aligning my skills and experiences with the job's demands, I am well-prepared to develop impactful healthcare solutions by leveraging advanced data science techniques.
