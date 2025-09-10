@@ -1,0 +1,51 @@
+
+# AutoJobhunter Configuration
+
+run:
+  cadence: daily
+  weekly_rollup_day: Saturday
+  timezone: America/Los_Angeles
+
+sources:
+  linkedin: true
+  indeed: true
+  others: []
+
+filters:
+  industries_priority: ["Energy", "Finance", "Health", "Tech"]
+  locations_priority: ["San Diego", "DMV", "East Coast", "Bay Area"]
+  recency_days: 7
+  min_score: 70
+  max_per_day: 50
+  title_keywords_include: ["Data Scientist", "Data Engineer", "ML Engineer", "Analytics"]
+  title_keywords_exclude: ["Senior Director", "VP", "Principal"]
+
+resume:
+  master_path: "resumes/master_resume.docx"
+  bullets_library: "resumes/bullets.yaml"
+  output_format: "pdf"
+  output_dir: "resumes"
+  naming_pattern: "{date}_{company}_{role}.pdf"
+
+scoring:
+  weights:
+    skills_match: 0.35
+    tools_match: 0.20
+    domain_match: 0.20
+    keywords_coverage: 0.15
+    seniority_alignment: 0.10
+  keyword_boosts:
+    Energy: ["solar", "battery", "bess", "pv", "wind", "grid", "iso", "market operations"]
+    Finance: ["portfolio", "options", "trading", "risk", "alpha", "factor", "hedge"]
+    Health: ["clinical", "claims", "EMR", "HL7", "FHIR", "biostatistics"]
+    Tech: ["mlops", "microservices", "cloud", "kubernetes", "genai", "llm"]
+  min_required_keywords: 5
+
+output:
+  tracker_path: "results.csv"
+  summaries_dir: "summaries"
+
+feedback:
+  enable: true
+  model: "moving_average"
+  learning_rate: 0.1
