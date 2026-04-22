@@ -1,10 +1,12 @@
+"""LinkedIn job scraper using Selenium. Importable by the CLI."""
+
 import logging
 import random
 import time
 
 import pandas as pd
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException, WebDriverException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,23 +16,26 @@ logger = logging.getLogger(__name__)
 
 
 class LinkedInJobScraper:
-    def __init__(self, job_titles, location="United States", max_jobs=5, headless=False):
+    def __init__(self, job_titles: list[str], location: str = "United States",
+                 max_jobs: int = 5, headless: bool = False):
         self.job_titles = job_titles
         self.location = location
         self.max_jobs = max_jobs
 
-        chrome_options = Options()
-        chrome_options.add_argument("--disable-blink-features=AutomationControlled")
-        chrome_options.add_argument("--start-maximized")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
+        opts = Options()
+        opts.add_argument("--disable-blink-features=AutomationControlled")
+        opts.add_argument("--start-maximized")
+        opts.add_argument("--no-sandbox")
+        opts.add_argument("--disable-dev-shm-usage")
         if headless:
-            chrome_options.add_argument("--headless=new")
+            opts.add_argument("--headless=new")
 
-        self.driver = webdriver.Chrome(options=chrome_options)
-        self.driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+        self.driver = webdriver.Chrome(options=opts)
+        self.driver.execute_script(
+            "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+        )
 
-    def search_jobs(self, job_title):
+    def search_jobs(self, job_title: str):
         url = (
             f"https://www.linkedin.com/jobs/search/"
             f"?keywords={job_title.replace(' ', '%20')}"
@@ -40,7 +45,7 @@ class LinkedInJobScraper:
         self.driver.get(url)
         time.sleep(5)
 
-    def scrape_jobs(self):
+    def scrape_jobs(self) -> pd.DataFrame:
         logger.info("Scraping job listings…")
         try:
             job_listings = WebDriverWait(self.driver, 10).until(
@@ -64,13 +69,25 @@ class LinkedInJobScraper:
                 logger.debug("Skipping card — element not found: %s", exc)
                 continue
 
-            jobs_data.append({"Title": title or "Unknown", "Company": company or "Unknown", "Link": link or ""})
-            logger.info("Scraped: %s @ %s", title, company)
+            # Best-effort: try to grab the description snippet shown in the card
+            description = ""
+            try:
+                description = job.find_element(By.CSS_SELECTOR, "p").text.strip()
+            except NoSuchElementException:
+                pass
+
+            jobs_data.append({
+                "Title": title or "Unknown",
+                "Company": company or "Unknown",
+                "Link": link or "",
+                "Description": description,
+            })
+            logger.debug("Scraped: %s @ %s", title, company)
             time.sleep(random.uniform(1, 2))
 
         return pd.DataFrame(jobs_data)
 
-    def save_jobs(self, df, filename="linkedin_jobs.csv"):
+    def save_jobs(self, df: pd.DataFrame, filename: str = "linkedin_jobs.csv"):
         if df.empty:
             logger.warning("No data to save.")
             return
@@ -83,18 +100,15 @@ class LinkedInJobScraper:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
-    job_titles = ["Data Scientist", "Data Engineer", "Business Intelligence Engineer"]
-    scraper = LinkedInJobScraper(job_titles=job_titles, max_jobs=5)
-
+    titles = ["Data Scientist", "Data Engineer", "ML Engineer"]
+    scraper = LinkedInJobScraper(job_titles=titles, max_jobs=5)
     try:
-        all_jobs = pd.DataFrame()
-        for title in job_titles:
-            print(f"\n{'=' * 50}\nSearching for: {title}\n{'=' * 50}")
-            scraper.search_jobs(title)
-            jobs_df = scraper.scrape_jobs()
-            if not jobs_df.empty:
-                all_jobs = pd.concat([all_jobs, jobs_df], ignore_index=True)
+        frames = []
+        for t in titles:
+            scraper.search_jobs(t)
+            frames.append(scraper.scrape_jobs())
             time.sleep(random.uniform(5, 8))
+        all_jobs = pd.concat(frames, ignore_index=True)
         scraper.save_jobs(all_jobs)
     finally:
         scraper.close()

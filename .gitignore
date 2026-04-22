@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Generated outputs — contain personal data
+resumes/
+summaries/
+job-matcher-system/custom_resume_*.txt
+job-matcher-system/recruiter_feedback.txt
+job-matcher-system/linkedin_jobs.csv
+job-matcher-system/google_jobs.csv
+job-matcher-system/linkedin_debug.png
+
+# Master resume (PII)
+job-matcher-system/master_resume.csv
+
+# Database
+*.db
+*.db-wal
+*.db-shm
+
+# Tracker CSV
+results.csv
+
+# Large generated files
+project_structure.txt
+
+# Secrets
+.env
+*.env

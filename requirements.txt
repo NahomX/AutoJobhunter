@@ -1,0 +1,12 @@
+beautifulsoup4
+requests
+pandas
+numpy
+scikit-learn
+python-docx
+PyYAML
+pytest
+playwright
+selenium
+tqdm
+openai
