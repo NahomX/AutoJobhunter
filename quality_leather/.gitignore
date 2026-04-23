@@ -1,0 +1,29 @@
+# Next.js
+.next/
+out/
+
+# Dependencies
+node_modules/
+
+# Environment
+.env.local
+.env.*.local
+
+# Uploads (local dev only — swap tmp/ for S3 in prod)
+tmp/
+
+# Build artifacts
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
