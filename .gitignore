@@ -1,0 +1,12 @@
+# Node / Next.js build artifacts
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+
+# Env
+.env.local
+.env*.local
+
+# OS
+.DS_Store
