@@ -1,0 +1,41 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+ENV/
+
+# ---- IDE / editor ----
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# ---- Secrets / env ----
+.env
+*.key
+
+# ---- Sensitive data (PII) — do NOT commit ----
+job-matcher-system/master_resume.csv
+
+# ---- Generated outputs ----
+job-matcher-system/custom_resume_*.txt
+job-matcher-system/recruiter_feedback.txt
+job-matcher-system/job_descriptions.txt
+
+# ---- Scraped data ----
+job-matcher-system/linkedin_jobs.csv
+job-matcher-system/google_jobs.csv
+job-matcher-system/data/*.csv
+job-matcher-system/linkedin_debug.png
+
+# ---- Windows tree artifact (UTF-16, large, not needed) ----
+project_structure.txt
