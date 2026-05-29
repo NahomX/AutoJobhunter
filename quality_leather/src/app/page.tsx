@@ -9,8 +9,8 @@ export default function HomePage() {
             Quality Leather
           </h1>
           <p className="text-xl text-stone-500 max-w-xl mx-auto leading-relaxed">
-            Upload photos of a garment you love. We&apos;ll generate a 3D preview of what it
-            would look like remade in leather — then hand it off to a tailor.
+            Upload 4 photos of a garment you love. Our AI will analyze it and generate a
+            spin-around leather preview — then hand it off to a tailor to make it real.
           </p>
         </header>
 

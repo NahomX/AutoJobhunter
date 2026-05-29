@@ -21,6 +21,7 @@ export default function PhotoUpload() {
   const [previews, setPreviews] = useState<PreviewMap>({ front: null, back: null, left: null, right: null })
   const [error, setError] = useState<string | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [wantMesh, setWantMesh] = useState(false)
   const refs = useRef<Record<SlotKey, HTMLInputElement | null>>({ front: null, back: null, left: null, right: null })
 
   function setFile(slot: SlotKey, file: File) {
@@ -74,7 +75,7 @@ export default function PhotoUpload() {
       const genRes = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ jobId }),
+        body: JSON.stringify({ jobId, wantMesh }),
       })
       if (!genRes.ok) {
         const j = await genRes.json().catch(() => ({}))
@@ -138,6 +139,20 @@ export default function PhotoUpload() {
           {error}
         </p>
       )}
+
+      {/* Optional 3D mesh generation */}
+      <label className="flex items-center gap-3 mb-5 cursor-pointer select-none group">
+        <input
+          type="checkbox"
+          checked={wantMesh}
+          onChange={(e) => setWantMesh(e.target.checked)}
+          className="w-4 h-4 rounded border-stone-300 accent-stone-900 cursor-pointer"
+        />
+        <span className="text-sm text-stone-600 group-hover:text-stone-800 transition-colors">
+          Also generate a 3D mesh{' '}
+          <span className="text-stone-400 text-xs">(takes longer)</span>
+        </span>
+      </label>
 
       <button
         onClick={submit}
