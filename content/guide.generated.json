@@ -1,0 +1,343 @@
+{
+  "property": {
+    "name": "{{PROPERTY_NAME}}",
+    "address": "325 S 30th St, San Diego, CA 92113",
+    "neighborhood": "Logan Heights / Barrio Logan, San Diego, CA",
+    "wifi": { "ssid": "careeriem", "password": "{{WIFI_PASSWORD}}" },
+    "checkin": "{{CHECKIN}}",
+    "checkout": "{{CHECKOUT}}",
+    "houseRules": []
+  },
+  "categories": [
+    {
+      "id": "grocery",
+      "label": "Grocery & Markets",
+      "places": [
+        {
+          "name": "Northgate González Market",
+          "blurb": "The neighborhood's full-service Mexican supermarket — fresh tortillas made in-store, a butcher counter, produce, carnitas, and a prepared-foods section with tamales and pan dulce. Everything you need for a home-cooked meal.",
+          "tier": "walk",
+          "distanceText": "13 min walk / 4 min drive",
+          "address": "1950 Main St, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Northgate+Market+1950+Main+St+San+Diego+CA",
+          "hours": "Daily 7:00 am – 10:00 pm",
+          "priceLevel": "$",
+          "tags": ["grocery", "mexican", "produce", "butcher", "bakery", "hot-food"],
+          "hostTip": "Go straight to the tortillería counter at the back — the handmade flour tortillas are still warm and they sell out by afternoon. The prepared-food bar is a steal for lunch; grab a plate of rice, beans, and carne asada for under $10."
+        },
+        {
+          "name": "Barrio Market",
+          "blurb": "A well-stocked neighborhood market inside Mercado del Barrio with grocery staples, cold drinks, Mexican sodas, snacks, and a solid craft beer selection. Perfect for a quick stock-up without trekking further.",
+          "tier": "short-hop",
+          "distanceText": "20 min walk / 5 min drive",
+          "address": "1897 National Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Barrio+Market+1897+National+Ave+San+Diego+CA",
+          "hours": "Daily 8:30 am – 10:00 pm",
+          "priceLevel": "$",
+          "tags": ["grocery", "convenience", "beer", "snacks", "late-hours"],
+          "hostTip": "This is the spot if you need beer, agua fresca, or a quick snack late in the evening. The local craft selection is surprisingly good for a corner market — they stock some regional San Diego cans you won't find at a chain store."
+        },
+        {
+          "name": "Vons (North Park)",
+          "blurb": "The nearest conventional American supermarket with full pharmacy, deli, bakery, and 24-hour grocery access. Slightly farther but great when you need things like name-brand packaged goods or pharmacy items.",
+          "tier": "short-hop",
+          "distanceText": "18 min walk / 5 min drive",
+          "address": "4145 30th St, San Diego, CA 92104",
+          "mapUrl": "https://maps.google.com/?q=Vons+4145+30th+St+San+Diego+CA",
+          "hours": "Daily 5:00 am – midnight",
+          "priceLevel": "$$",
+          "tags": ["grocery", "pharmacy", "deli", "bakery", "24-hour-ish"],
+          "hostTip": "Drive or ride-share — walking up 30th Street from Logan Heights into North Park is uphill and takes about 18 minutes. Good place to fill a prescription or grab a rotisserie chicken late at night when Northgate is closed."
+        },
+        {
+          "name": "Mercado del Barrio (Anchor Shops)",
+          "blurb": "The mixed-use market complex anchored by Northgate Market and dotted with tiendas, a tortillería, and specialty food stalls under the Coronado Bridge. Grab groceries, elote, and an agua fresca all in one stop.",
+          "tier": "short-hop",
+          "distanceText": "20 min walk / 5 min drive",
+          "address": "1900 Main St, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Mercado+del+Barrio+1900+Main+St+San+Diego+CA",
+          "hours": "Individual shops vary; complex open daily approx. 8:00 am – 8:00 pm",
+          "priceLevel": "$",
+          "tags": ["market", "grocery", "specialty", "food-stalls", "community"],
+          "hostTip": "Park in the lot off National Ave — it's free and easy. On weekend mornings vendors sometimes set up a small farmers'-market style spread near the entrance with fruit, tamales, and fresh-squeezed juices. Worth a wander even if you don't need groceries."
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "label": "Food & Drink",
+      "places": [
+        {
+          "name": "La Fachada",
+          "blurb": "Open-air street-taco spot on 25th St in Logan Heights that runs until 2–3 am on weekends — a neighborhood institution for carne asada, al pastor, and birria tacos at any hour. Cash only and worth every bit of the experience.",
+          "tier": "walk",
+          "distanceText": "14 min walk / 4 min drive",
+          "address": "20 25th St, San Diego, CA 92102",
+          "mapUrl": "https://maps.google.com/?q=La+Fachada+20+25th+St+San+Diego+CA",
+          "hours": "Mon–Thu 7:00 am – 2:00 am; Fri–Sat 7:00 am – 3:00 am; Sun 7:00 am – 2:00 am",
+          "priceLevel": "$",
+          "tags": ["tacos", "mexican", "late-night", "street-food", "cash-only"],
+          "hostTip": "Order the birria quesatacos — they dunk the tortilla in consommé before it hits the griddle. Late Friday and Saturday nights the line moves fast because they have multiple griddles going. Bring cash; there's an ATM a block away."
+        },
+        {
+          "name": "Las Cuatro Milpas",
+          "blurb": "San Diego's most legendary taco shop, now reopened in a new Barrio Logan space inside Mercado del Barrio. The Estudillo family has been making handmade tamales, rolled tacos, and flour tortillas since 1933. Lines form early — go before 10 am.",
+          "tier": "short-hop",
+          "distanceText": "20 min walk / 5 min drive",
+          "address": "1985 National Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Las+Cuatro+Milpas+1985+National+Ave+San+Diego+CA",
+          "hours": "Mon, Wed, Fri 8:00 am – 3:00 pm; Tue, Thu 8:00 am – 1:30 pm; Sat 6:00 am – 1:30 pm; Sun Closed",
+          "priceLevel": "$",
+          "tags": ["tacos", "tamales", "mexican", "historic", "breakfast", "cash-preferred"],
+          "hostTip": "This place sells out. On Saturday they open at 6 am and the tamales and rolled tacos are gone by 11. Arrive by 9 am any weekday to avoid the worst of the wait. The flour tortillas are thin, soft, and made to order — order a stack on the side."
+        },
+        {
+          "name": "Por Vida",
+          "blurb": "A café and galería in the heart of Barrio Logan serving horchata lattes, mazapán hot chocolate, and spicy lemonades alongside rotating Chicano and Latino artwork. The perfect spot to work, linger, or start the morning.",
+          "tier": "short-hop",
+          "distanceText": "18 min walk / 4 min drive",
+          "address": "2146 Logan Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Por+Vida+2146+Logan+Ave+San+Diego+CA",
+          "hours": "Daily 8:00 am – 6:00 pm",
+          "priceLevel": "$",
+          "tags": ["coffee", "cafe", "art", "horchata", "breakfast", "community"],
+          "hostTip": "Order the horchata latte — it's the move that everyone in the neighborhood gets. The art on the walls changes every few weeks and features local artists from Barrio Logan. Wifi is solid if you need to work remotely for a bit."
+        },
+        {
+          "name": "Todo Pa' La Cruda",
+          "blurb": "A Guerrerense seafood-and-hangover-cure joint with pozole, birria, mariscos, and caldo that locals swear heals whatever ails you. Unpretentious, generous portions, and genuinely great broth.",
+          "tier": "short-hop",
+          "distanceText": "18 min walk / 4 min drive",
+          "address": "2196 Logan Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Todo+Pa+La+Cruda+2196+Logan+Ave+San+Diego+CA",
+          "hours": "Mon–Thu 9:00 am – 8:00 pm; Fri–Sat 9:00 am – 9:30 pm; Sun 9:00 am – 9:00 pm",
+          "priceLevel": "$",
+          "tags": ["mexican", "seafood", "pozole", "birria", "soup", "brunch"],
+          "hostTip": "The birria consommé bowl with fresh tortillas is the star. If you're here on a Saturday morning after a long night, the pozole rojo is the correct call — it comes with all the toppings and a side of tostadas."
+        },
+        {
+          "name": "Ciccia Osteria",
+          "blurb": "A Michelin-recognized Italian trattoria set in a converted bungalow on Logan Ave, headed by chef Mario Cassineri. Handmade pasta, house-cured meats, and a short natural-wine list — one of the most surprising restaurants in all of San Diego.",
+          "tier": "short-hop",
+          "distanceText": "19 min walk / 5 min drive",
+          "address": "2233 Logan Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Ciccia+Osteria+2233+Logan+Ave+San+Diego+CA",
+          "hours": "Mon, Wed–Fri 4:30 pm – 9:15 pm; Sat–Sun 12:00 pm – 2:00 pm and 4:30 pm – 9:15 pm; Tue Closed",
+          "priceLevel": "$$$",
+          "tags": ["italian", "pasta", "wine", "michelin", "dinner", "date-night"],
+          "hostTip": "Book ahead — they're small and fill up fast, especially on weekends. The cacio e pepe and the charcuterie board are both worth ordering. BYOB is allowed with a modest corkage fee, which helps keep the evening reasonable."
+        },
+        {
+          "name": "Mujeres Brew House",
+          "blurb": "The only Latina-owned brewery in San Diego, with a large beer garden, rotating food trucks, and house-brewed craft beers that lean toward approachable lagers and fruit-forward ales. Great outdoor vibe.",
+          "tier": "short-hop",
+          "distanceText": "17 min walk / 4 min drive",
+          "address": "1983 Julian Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Mujeres+Brew+House+1983+Julian+Ave+San+Diego+CA",
+          "hours": "Tue–Fri 4:00 pm – 10:00 pm; Sat–Sun 12:00 pm – 9:00 pm; Mon Closed",
+          "priceLevel": "$$",
+          "tags": ["brewery", "beer-garden", "latina-owned", "food-trucks", "outdoor"],
+          "hostTip": "Check their Instagram the day of your visit to see which food truck is parked out front — the lineup changes. Their flagship horchata cream ale is fantastic and pairs well with whatever truck they've got going. The garden gets packed on warm Sunday afternoons, so arrive before 2 pm to grab a picnic table."
+        }
+      ]
+    },
+    {
+      "id": "beaches",
+      "label": "Beaches",
+      "places": [
+        {
+          "name": "Coronado Beach",
+          "blurb": "Consistently voted one of the best beaches in the US — wide white sand, calm surf, and the iconic Hotel Del Coronado as the backdrop. Get there by ferry from Broadway Pier (15 min across the bay) or drive over the Coronado Bridge (about 15 min). No direct trolley.",
+          "tier": "short-hop",
+          "distanceText": "15 min drive / 30 min via ferry from Broadway Pier",
+          "address": "Ocean Blvd & Isabella Ave, Coronado, CA 92118",
+          "mapUrl": "https://maps.google.com/?q=Coronado+Beach+Ocean+Blvd+Coronado+CA",
+          "hours": "Beach open daily 6:00 am – sunset",
+          "priceLevel": "$",
+          "tags": ["beach", "swimming", "family", "iconic", "ferry-access", "dog-friendly"],
+          "hostTip": "Take the ferry if it's your first visit — the bay crossing is beautiful and you arrive right at the beach without dealing with parking. Ferry departs Broadway Pier (900 N Harbor Dr downtown) every hour on the hour, $9 each way. If you drive, free street parking on Ocean Blvd fills up fast in summer — aim to arrive before 9 am."
+        },
+        {
+          "name": "Silver Strand State Beach",
+          "blurb": "A long, sheltered strip of sand on the ocean side of Coronado that's calmer and less crowded than the main Coronado Beach. Great for swimming, paddleboarding, and camping, with a bayside area for kayaking.",
+          "tier": "short-hop",
+          "distanceText": "20 min drive",
+          "address": "5000 Hwy 75, Coronado, CA 92118",
+          "mapUrl": "https://maps.google.com/?q=Silver+Strand+State+Beach+5000+Hwy+75+Coronado+CA",
+          "hours": "Daily 8:00 am – sunset (parking lot closes at sunset)",
+          "priceLevel": "$",
+          "tags": ["beach", "state-park", "swimming", "paddleboard", "camping", "bayside"],
+          "hostTip": "Drive here rather than ferry — it's 4.5 miles south of Coronado proper and easier to reach by car. Parking is $15 per vehicle (day use). On summer weekdays the lot doesn't fill until late morning, so you can stroll in without stress. The bay side is flat and calm — perfect for kids or anyone nervous about ocean surf."
+        },
+        {
+          "name": "Imperial Beach",
+          "blurb": "San Diego's southernmost beach, 15 miles from Barrio Logan — known for its laid-back vibe, the annual US Open of Surfing, and the Tijuana Estuary right next door. Accessible by Blue Line trolley, which is one of the few beaches you can actually reach car-free.",
+          "tier": "short-hop",
+          "distanceText": "25 min drive / ~45 min on Blue Line trolley (transfer at 12th & Imperial)",
+          "address": "Seacoast Dr, Imperial Beach, CA 91932",
+          "mapUrl": "https://maps.google.com/?q=Imperial+Beach+Seacoast+Dr+Imperial+Beach+CA",
+          "hours": "Beach open 24 hrs; lifeguard hours seasonal",
+          "priceLevel": "$",
+          "tags": ["beach", "surfing", "trolley-accessible", "free-parking", "south-bay"],
+          "hostTip": "The Blue Line trolley goes all the way to San Ysidro; get off at the Palm Ave station and walk about 10 minutes to the pier. Free street parking if you drive. The pier area has a few good taco spots and a classic beachside feel without the crowds of Mission Beach."
+        },
+        {
+          "name": "Coronado Ferry & Embarcadero Walk",
+          "blurb": "Not a beach itself — but the ferry ride from Broadway Pier across San Diego Bay is 15 minutes of pure harbor scenery, and the Coronado Ferry Landing drops you right by the beach. A fun way to combine transit and a beach day.",
+          "tier": "short-hop",
+          "distanceText": "12 min drive to Broadway Pier + 15 min ferry",
+          "address": "Broadway Pier, 990 N Harbor Dr, San Diego, CA 92101",
+          "mapUrl": "https://maps.google.com/?q=Broadway+Pier+990+N+Harbor+Dr+San+Diego+CA",
+          "hours": "Ferries depart Broadway Pier hourly 9:00 am – 9:00 pm (10:00 pm Fri–Sat)",
+          "priceLevel": "$",
+          "tags": ["ferry", "water-views", "coronado", "transit", "scenic"],
+          "hostTip": "Adult fare is $9 each way — buy tickets at the pier kiosk. The morning commuter runs (before 9 am weekdays) are free if you catch them. Sit on the starboard side heading toward Coronado for the best skyline views looking back at downtown."
+        }
+      ]
+    },
+    {
+      "id": "activities",
+      "label": "Things to Do",
+      "places": [
+        {
+          "name": "Chicano Park",
+          "blurb": "A National Historic Landmark unlike any other — 79 massive murals cover the concrete pillars of the Coronado Bridge, telling the story of Chicano and Mexican history, civil rights, and cultural pride. Free, always open, and genuinely moving to walk through.",
+          "tier": "short-hop",
+          "distanceText": "22 min walk / 6 min drive",
+          "address": "1949 Logan Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Chicano+Park+1949+Logan+Ave+San+Diego+CA",
+          "hours": "Park open daily 6:00 am – 10:00 pm",
+          "priceLevel": "$",
+          "tags": ["murals", "history", "park", "free", "landmark", "cultural", "outdoor"],
+          "hostTip": "Walk the full perimeter of the pylons — each one tells a different story. Come on the last Saturday of April for Chicano Park Day, the neighborhood's biggest community celebration with live music, dancers, and food. The Chicano Park Museum (1960 National Ave) is right across the street and open Thu–Sun 11am–5pm if you want more context."
+        },
+        {
+          "name": "Chicano Park Museum and Cultural Center",
+          "blurb": "A community-run museum just across the street from Chicano Park, with rotating exhibitions on Chicano art, history, and the neighborhood's activist legacy. Small, focused, and worth 45 minutes of your time.",
+          "tier": "short-hop",
+          "distanceText": "22 min walk / 6 min drive",
+          "address": "1960 National Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Chicano+Park+Museum+1960+National+Ave+San+Diego+CA",
+          "hours": "Thu–Sun 11:00 am – 5:00 pm; Mon–Wed Closed",
+          "priceLevel": "$",
+          "tags": ["museum", "history", "art", "chicano", "cultural", "free-or-cheap"],
+          "hostTip": "Combine this with the park murals next door — budget two hours total. The museum's gift shop has work by local artists and is one of the better places in San Diego to buy something genuinely from the community rather than a tourist shop."
+        },
+        {
+          "name": "Barrio Art Crawl",
+          "blurb": "A free self-guided tour of open studios, galleries, murals, and local businesses throughout Barrio Logan — held every second Saturday of the month from noon to 6 pm. The neighborhood's art scene is serious; this is how you see it.",
+          "tier": "short-hop",
+          "distanceText": "18 min walk / 5 min drive to Logan Ave corridor",
+          "address": "Logan Ave corridor, Barrio Logan, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Barrio+Logan+Art+Crawl+Logan+Ave+San+Diego+CA",
+          "hours": "Second Saturday of each month, noon – 6:00 pm",
+          "priceLevel": "$",
+          "tags": ["art", "galleries", "murals", "free", "monthly", "community", "walking"],
+          "hostTip": "Pick up a printed map at La Bodega Gallery (2196 Logan Ave) when you arrive — the route covers about a dozen stops. It's completely walkable if you're in Barrio Logan proper. Even if you visit on a non-crawl day, the murals and galleries along Logan Ave are open and worth exploring."
+        },
+        {
+          "name": "La Bodega Gallery & Studios",
+          "blurb": "Thirty working artist studios plus 1,600 sq ft of gallery space inside a 1917 warehouse that once housed the Bank of Italy. The anchor of Barrio Logan's art scene and the best place to buy work directly from local Chicano and Latino artists.",
+          "tier": "short-hop",
+          "distanceText": "19 min walk / 5 min drive",
+          "address": "2196 Logan Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=La+Bodega+Gallery+2196+Logan+Ave+San+Diego+CA",
+          "hours": "Mon–Fri noon – 5:00 pm (confirm hours — can vary by event)",
+          "priceLevel": "$",
+          "tags": ["gallery", "art", "studios", "chicano", "latino", "free-to-browse"],
+          "hostTip": "If a studio door is open, knock and walk in — the artists here are generally happy to talk about their work. The building itself has incredible bones; the exposed-brick main hall is a great backdrop even if you're not buying anything."
+        },
+        {
+          "name": "Cesar Chavez Park & San Diego Bay Waterfront",
+          "blurb": "A waterfront park on the bay with a pier, picnic tables, a large turf field, and some of the best unobstructed views of the Coronado Bridge and the San Diego skyline. Free, uncrowded, and genuinely beautiful at sunset.",
+          "tier": "short-hop",
+          "distanceText": "22 min walk / 6 min drive",
+          "address": "1449 Cesar E. Chavez Pkwy, San Diego, CA 92101",
+          "mapUrl": "https://maps.google.com/?q=Cesar+Chavez+Park+1449+Cesar+E+Chavez+Pkwy+San+Diego+CA",
+          "hours": "Daily 6:00 am – 10:30 pm",
+          "priceLevel": "$",
+          "tags": ["park", "waterfront", "views", "picnic", "bay", "coronado-bridge", "free"],
+          "hostTip": "Sunset here is legitimately one of the best free views in San Diego — the bridge lights up and the cargo ships moving through the bay are surprisingly dramatic. Bring food from Las Cuatro Milpas or Todo Pa' La Cruda and make it a picnic. Note: the park may be renamed in 2026 — check local signs."
+        },
+        {
+          "name": "Mercado del Barrio",
+          "blurb": "A vibrant mixed-use market plaza built under the Coronado Bridge, anchored by Northgate Market and surrounded by local restaurants, small shops, and community event space. The beating heart of the new Barrio Logan.",
+          "tier": "short-hop",
+          "distanceText": "20 min walk / 5 min drive",
+          "address": "1900 Main St, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Mercado+del+Barrio+1900+Main+St+San+Diego+CA",
+          "hours": "Complex open daily approx. 8:00 am – 8:00 pm (individual shops vary)",
+          "priceLevel": "$",
+          "tags": ["market", "community", "shopping", "food", "plaza", "event-space"],
+          "hostTip": "Las Cuatro Milpas reopened here in May 2026 — that alone is worth the visit. On weekday mornings it's quiet and local; on Saturday afternoons it fills up with families. The free parking lot off National Ave is generous."
+        }
+      ]
+    },
+    {
+      "id": "transit",
+      "label": "Getting Around",
+      "places": [
+        {
+          "name": "Barrio Logan Blue Line Trolley Station",
+          "blurb": "The Blue Line stop right in Barrio Logan gives you car-free access to downtown San Diego in about 10 minutes and runs south all the way to the US-Mexico border at San Ysidro. Trains run every 7–15 minutes from early morning to after midnight.",
+          "tier": "short-hop",
+          "distanceText": "25 min walk to station / 5 min drive",
+          "address": "1910 Harbor Dr, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Barrio+Logan+Trolley+Station+1910+Harbor+Dr+San+Diego+CA",
+          "hours": "Service approx. 4:00 am – midnight daily",
+          "priceLevel": "$",
+          "tags": ["transit", "trolley", "blue-line", "downtown", "border", "car-free"],
+          "hostTip": "A single ride is $2.50 with a PRONTO card (tap to pay) or cash. You can reach downtown's Santa Fe Depot in about 10 minutes heading north, and the Old Town Transit Center (for bus connections to Pacific Beach, the airport shuttle, and Ocean Beach) in about 20 minutes. Download the PRONTO app before you go to avoid fumbling with the ticket machine."
+        },
+        {
+          "name": "San Diego Airport (SAN) — Transit & Rideshare",
+          "blurb": "San Diego International Airport is only 6 miles from the house. No direct trolley connection exists, but the Blue Line gets you to downtown's Santa Fe Depot in 10 minutes, then MTS Route 992 shuttles directly to both airport terminals every 15 minutes.",
+          "tier": "short-hop",
+          "distanceText": "10 min drive / 25 min via trolley + bus 992",
+          "address": "3225 N Harbor Dr, San Diego, CA 92101",
+          "mapUrl": "https://maps.google.com/?q=San+Diego+International+Airport+3225+N+Harbor+Dr+San+Diego+CA",
+          "hours": "Bus 992 runs daily 4:15 am – midnight",
+          "priceLevel": "$",
+          "tags": ["airport", "transit", "rideshare", "bus-992", "trolley"],
+          "hostTip": "For early-morning flights, rideshare (Uber/Lyft) from the house to the airport runs about $12–18 and takes 10 minutes — it's worth it versus navigating public transit at 5 am with luggage. For a daytime arrival with carry-on only, take the trolley to Santa Fe Depot then hop the 992 bus ($2.50 total) — it drops you at both terminals."
+        },
+        {
+          "name": "Coronado Ferry — Broadway Pier",
+          "blurb": "A scenic 15-minute ferry crossing from downtown's Broadway Pier to the Coronado Ferry Landing — the best way to reach Coronado Beach without dealing with Coronado Bridge traffic. Runs every hour on the hour.",
+          "tier": "short-hop",
+          "distanceText": "12 min drive to Broadway Pier",
+          "address": "990 N Harbor Dr (Broadway Pier), San Diego, CA 92101",
+          "mapUrl": "https://maps.google.com/?q=Broadway+Pier+990+N+Harbor+Dr+San+Diego+CA",
+          "hours": "Departs San Diego hourly on the hour, 9:00 am – 9:00 pm (10:00 pm Fri–Sat). Departs Coronado on the half-hour, 9:30 am – 9:30 pm (10:30 pm Fri–Sat)",
+          "priceLevel": "$",
+          "tags": ["ferry", "transit", "coronado", "scenic", "waterfront"],
+          "hostTip": "Adult fare is $9 each way; kids under 4 free. Weekday commuter runs before 9 am on the Broadway Pier route are free. Buy tickets at the kiosk — they go fast on summer weekends. If you're traveling light, ride a rental bike onto the ferry and coast around Coronado's flat streets when you arrive."
+        },
+        {
+          "name": "Getting Downtown & Parking Notes",
+          "blurb": "Downtown San Diego is 3 miles north — a 7-minute drive or 10-minute trolley ride. Street parking near the house on S 30th St is metered on some blocks; check the signs. For Gaslamp Quarter or Petco Park events, the trolley is almost always faster than driving and parking.",
+          "tier": "short-hop",
+          "distanceText": "7 min drive / 10 min Blue Line trolley",
+          "address": "Downtown San Diego, CA 92101",
+          "mapUrl": "https://maps.google.com/?q=Downtown+San+Diego+CA",
+          "hours": "Blue Line runs approx. 4:00 am – midnight",
+          "priceLevel": "$",
+          "tags": ["parking", "downtown", "trolley", "driving", "tips"],
+          "hostTip": "Street parking around the house is generally easy on weekdays. If you're driving into downtown for a Padres game or the Gaslamp, save yourself the parking hassle: drive to the Barrio Logan trolley station (free street parking nearby), hop the Blue Line north, and walk from 12th & Imperial. Takes about 15 minutes total and costs $2.50."
+        },
+        {
+          "name": "Rideshare & Biking",
+          "blurb": "Uber and Lyft are reliable and quick from the address — the neighborhood is well-served. As of mid-2026, San Diego's city-wide bike share is not operational (MTS is working on reimplementing it), but the area is relatively flat and bike-friendly if you bring or rent a bike.",
+          "tier": "walk",
+          "distanceText": "On-demand from the house",
+          "address": "325 S 30th St, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=325+S+30th+St+San+Diego+CA",
+          "hours": "Rideshare available 24/7",
+          "priceLevel": "$",
+          "tags": ["rideshare", "uber", "lyft", "bike", "tips"],
+          "hostTip": "Rideshare surge pricing hits hard on weekend nights after midnight — if you're heading home from Barrio Logan after bar hours, consider walking to a main street (Logan Ave or National Ave) and catching a ride from there rather than a residential side street, which can confuse drivers. A bike lock is worth bringing if you plan to cycle; the Logan Heights–Barrio Logan loop along National Ave is a pleasant 3-mile ride."
+        }
+      ]
+    }
+  ]
+}
