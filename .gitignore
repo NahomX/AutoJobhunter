@@ -1,3 +1,9 @@
+# ---- Next.js (Barrio Logan Guest Concierge) ----
+node_modules/
+.next/
+.env.local
+*.tsbuildinfo
+
 # ---- Python ----
 __pycache__/
 *.py[cod]

@@ -1,0 +1,169 @@
+{
+  "property": {
+    "name": "{{PROPERTY_NAME}}",
+    "address": "325 S 30th St, San Diego, CA 92113",
+    "neighborhood": "Logan Heights / Barrio Logan, San Diego, CA",
+    "wifi": {
+      "ssid": "careeriem",
+      "password": "{{WIFI_PASSWORD}}"
+    },
+    "checkin": "{{CHECKIN}}",
+    "checkout": "{{CHECKOUT}}",
+    "houseRules": [
+      "{{HOUSE_RULE_1}}",
+      "{{HOUSE_RULE_2}}"
+    ]
+  },
+  "categories": [
+    {
+      "id": "grocery",
+      "label": "Grocery & Markets",
+      "places": [
+        {
+          "name": "Northgate González Market",
+          "blurb": "Full-service Latino supermarket with an excellent produce section, fresh tortillas, and a butcher counter. Great prices and a friendly neighborhood vibe.",
+          "tier": "walk",
+          "distanceText": "8 min walk",
+          "address": "1030 Logan Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Northgate+Gonzalez+Market+1030+Logan+Ave+San+Diego",
+          "hours": "Mon–Sun 7am–10pm",
+          "priceLevel": "$",
+          "tags": ["latino groceries", "produce", "butcher", "tortillas"],
+          "hostTip": "The fresh tortillas from the in-store tortillería are made daily — grab them warm in the morning."
+        },
+        {
+          "name": "El Rancho Market",
+          "blurb": "A neighborhood corner market stocked with Mexican staples, snacks, and cold drinks — perfect for a quick grab-and-go.",
+          "tier": "walk",
+          "distanceText": "5 min walk",
+          "address": "2904 National Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=El+Rancho+Market+2904+National+Ave+San+Diego",
+          "hours": "Mon–Sun 7am–9pm",
+          "priceLevel": "$",
+          "tags": ["corner store", "snacks", "drinks"],
+          "hostTip": "Good for basics and late-night snacks when the larger stores are closed."
+        }
+      ]
+    },
+    {
+      "id": "food",
+      "label": "Food & Restaurants",
+      "places": [
+        {
+          "name": "Las Cuatro Milpas",
+          "blurb": "A Barrio Logan institution since 1933 — handmade tortillas, slow-cooked beans, and carnitas that draw lines around the block. Cash only, worth every minute.",
+          "tier": "walk",
+          "distanceText": "10 min walk",
+          "address": "1857 Logan Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Las+Cuatro+Milpas+1857+Logan+Ave+San+Diego",
+          "hours": "Mon–Fri 8am–3pm, Sat 8am–2pm (cash only, closes when food runs out)",
+          "priceLevel": "$",
+          "tags": ["mexican", "breakfast", "lunch", "cash only", "local legend"],
+          "hostTip": "Arrive before noon or they may run out. Bring cash — no cards accepted."
+        },
+        {
+          "name": "Chicano Park Taco Stand",
+          "blurb": "Casual open-air tacos and street food right next to Chicano Park. Simple, authentic, and budget-friendly.",
+          "tier": "walk",
+          "distanceText": "12 min walk",
+          "address": "2020 National Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Chicano+Park+Taco+Stand+National+Ave+San+Diego",
+          "hours": "Thu–Sun 11am–5pm (hours vary — check before going)",
+          "priceLevel": "$",
+          "tags": ["tacos", "street food", "outdoor"],
+          "hostTip": "Great spot to grab lunch after walking through the park murals."
+        }
+      ]
+    },
+    {
+      "id": "beaches",
+      "label": "Beaches",
+      "places": [
+        {
+          "name": "Coronado Beach",
+          "blurb": "One of the most beautiful beaches in the US — wide white sand, calm surf, and the iconic Hotel del Coronado as a backdrop. Reach it by the Coronado Ferry from downtown.",
+          "tier": "short-hop",
+          "distanceText": "15 min drive or ~30 min via trolley + ferry",
+          "address": "Ocean Blvd, Coronado, CA 92118",
+          "mapUrl": "https://maps.google.com/?q=Coronado+Beach+Coronado+CA",
+          "hours": "Open daily, lifeguards seasonal",
+          "priceLevel": "$",
+          "tags": ["beach", "swimming", "family-friendly", "ferry access"],
+          "hostTip": "Skip the bridge traffic — take the Broadway Pier ferry from downtown. It drops you right near the beach and the trip itself is scenic."
+        },
+        {
+          "name": "Silver Strand State Beach",
+          "blurb": "A quieter, less-crowded stretch of sand on the Coronado peninsula, popular with locals for calm water and wide open space.",
+          "tier": "short-hop",
+          "distanceText": "20 min drive",
+          "address": "5000 CA-75, Coronado, CA 92118",
+          "mapUrl": "https://maps.google.com/?q=Silver+Strand+State+Beach+Coronado+CA",
+          "hours": "Daily 8am–sunset; parking fee applies",
+          "priceLevel": "$$",
+          "tags": ["beach", "state park", "quiet", "swimming"],
+          "hostTip": "Less crowded than Coronado Beach on weekends. Bring cash or a card for the parking kiosk."
+        }
+      ]
+    },
+    {
+      "id": "activities",
+      "label": "Activities & Sights",
+      "places": [
+        {
+          "name": "Chicano Park",
+          "blurb": "A National Historic Landmark with one of the largest collections of outdoor murals in the US. The murals cover the freeway pylons with vivid Chicano history and art — a genuinely moving place to walk through.",
+          "tier": "walk",
+          "distanceText": "12 min walk",
+          "address": "1925 National Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Chicano+Park+San+Diego",
+          "hours": "Open daily, sunrise to sunset",
+          "priceLevel": "$",
+          "tags": ["murals", "history", "park", "landmark", "free"],
+          "hostTip": "The murals on the underside of the Coronado Bridge pylons are the heart of it — walk the full perimeter for the complete experience."
+        },
+        {
+          "name": "Barrio Logan Arts District",
+          "blurb": "The neighborhood surrounding the property is a hub of galleries, studios, and street art. A self-guided walk along Logan Ave and National Ave reveals rotating murals and small galleries.",
+          "tier": "walk",
+          "distanceText": "5–15 min walk (distributed)",
+          "address": "Logan Ave & National Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Barrio+Logan+Arts+District+San+Diego",
+          "hours": "Galleries typically Fri–Sun 11am–5pm; street art always accessible",
+          "priceLevel": "$",
+          "tags": ["art", "galleries", "murals", "walkable", "free"],
+          "hostTip": "Check if it's the third Saturday of the month — several studios open for a community art walk."
+        }
+      ]
+    },
+    {
+      "id": "transit",
+      "label": "Getting Around",
+      "places": [
+        {
+          "name": "Barrio Logan Trolley Station (Blue Line)",
+          "blurb": "The Blue Line trolley runs from here to downtown San Diego in about 10 minutes, and continues south to the US–Mexico border. Reliable, cheap, and no parking stress.",
+          "tier": "walk",
+          "distanceText": "10 min walk",
+          "address": "1600 National Ave, San Diego, CA 92113",
+          "mapUrl": "https://maps.google.com/?q=Barrio+Logan+Trolley+Station+San+Diego",
+          "hours": "Approx. 5am–midnight daily; check MTS for current schedule",
+          "priceLevel": "$",
+          "tags": ["trolley", "transit", "downtown", "border"],
+          "hostTip": "A day pass covers unlimited rides — good value if you're doing downtown + Coronado Ferry in one day. Buy on the platform ticket machine or the MTS app."
+        },
+        {
+          "name": "Airport (SAN) Access",
+          "blurb": "San Diego International Airport is just 10–15 minutes away by car. By trolley take the Blue Line to downtown, then the 992 bus to the airport — about 30 minutes total.",
+          "tier": "short-hop",
+          "distanceText": "10 min drive / 30 min by trolley + bus",
+          "address": "3225 N Harbor Dr, San Diego, CA 92101",
+          "mapUrl": "https://maps.google.com/?q=San+Diego+International+Airport",
+          "hours": "Terminal open 24/7",
+          "priceLevel": "$$",
+          "tags": ["airport", "transit", "rideshare"],
+          "hostTip": "Rideshare (Uber/Lyft) from the property is usually under $15. Pickup from the app lot is on the north side of the terminal."
+        }
+      ]
+    }
+  ]
+}
