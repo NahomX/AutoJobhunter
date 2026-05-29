@@ -42,7 +42,14 @@ export async function POST(request: NextRequest) {
     await savePhoto(jobId, slot, buffer, ext)
   }
 
-  await saveMeta(jobId, { jobId, createdAt: Date.now() })
+  await saveMeta(jobId, {
+    jobId,
+    createdAt: Date.now(),
+    mock: !process.env.GEMINI_API_KEY,
+    phase: 'pending',
+    progress: 0,
+    views: [],
+  })
 
   return NextResponse.json({ jobId }, { status: 201 })
 }

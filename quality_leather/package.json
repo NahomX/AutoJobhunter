@@ -9,11 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/genai": "^2.7.0",
+    "@react-three/drei": "^9",
+    "@react-three/fiber": "^8",
     "next": "^14.2.0",
     "react": "^18",
     "react-dom": "^18",
-    "@react-three/fiber": "^8",
-    "@react-three/drei": "^9",
     "three": "^0.165.0",
     "uuid": "^10.0.0"
   },
