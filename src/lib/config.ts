@@ -16,17 +16,6 @@ import { createOllama } from "ollama-ai-provider-v2";
 import { anthropic } from "@ai-sdk/anthropic";
 import type { LanguageModel } from "ai";
 
-/** Reads a required server env var; throws if missing in production. */
-function requireEnv(key: string, fallback?: string): string {
-  const value = process.env[key] ?? fallback;
-  if (!value) {
-    throw new Error(
-      `Missing required environment variable: ${key}. See .env.example.`
-    );
-  }
-  return value;
-}
-
 /**
  * Returns the configured language model for the current environment.
  *
