@@ -1,58 +1,58 @@
+/**
+ * GET /api/status/[id]
+ *
+ * Returns a StatusPayload describing the current state of a Gemini hybrid job.
+ * viewUrls are built as /api/views/<jobId>/<index> for each saved frame.
+ * If a Meshy task ID is recorded, best-effort polls it and updates the meta.
+ */
+export const runtime = 'nodejs'
+
 import { NextRequest, NextResponse } from 'next/server'
-import { loadMeta } from '@/lib/storage'
-import { fetchTaskStatus, MeshyStatus } from '@/lib/meshy'
-
-export interface StatusPayload {
-  status: MeshyStatus
-  progress: number
-  modelUrl?: string
-  error?: string
-  mock?: boolean
-}
-
-// In-process mock clock. Resets on cold start — fine for dev.
-const mockCreatedAt = new Map<string, number>()
-const MOCK_DURATION_MS = 6_000
+import { loadMeta, patchMeta } from '@/lib/storage'
+import { fetchTaskStatus } from '@/lib/meshy'
+import type { StatusPayload, MeshStatus } from '@/lib/types'
 
 export async function GET(
   _request: NextRequest,
   { params }: { params: { id: string } },
 ) {
-  const meta = await loadMeta(params.id).catch(() => null)
-  if (!meta?.meshyTaskId) {
-    return NextResponse.json({ error: 'Job not found or generation not started' }, { status: 404 })
+  const jobId = params.id
+  const meta = await loadMeta(jobId).catch(() => null)
+  if (!meta) {
+    return NextResponse.json({ error: 'Job not found' }, { status: 404 })
   }
 
-  if (meta.mock) {
-    const taskId = meta.meshyTaskId
-    if (!mockCreatedAt.has(taskId)) mockCreatedAt.set(taskId, Date.now())
-    const elapsed = Date.now() - mockCreatedAt.get(taskId)!
+  // Build view URLs — one per saved frame.
+  const viewUrls = meta.views.map((_filename, i) => `/api/views/${jobId}/${i}`)
 
-    if (elapsed < MOCK_DURATION_MS) {
-      const progress = Math.round((elapsed / MOCK_DURATION_MS) * 90)
-      return NextResponse.json<StatusPayload>({ status: 'IN_PROGRESS', progress, mock: true })
+  // Best-effort Meshy poll — only when a real task exists.
+  let meshStatus: MeshStatus | undefined = meta.meshStatus
+  let modelUrl: string | undefined = meta.modelUrl
+
+  if (meta.meshyTaskId && !meta.mock) {
+    try {
+      const task = await fetchTaskStatus(meta.meshyTaskId)
+      meshStatus = task.status as MeshStatus
+      if (task.model_urls?.glb) {
+        modelUrl = task.model_urls.glb
+      }
+      // Persist the updated mesh state (best-effort — don't fail the response).
+      await patchMeta(jobId, { meshStatus, modelUrl }).catch(() => undefined)
+    } catch {
+      // Swallow Meshy errors — they must not block the turntable response.
     }
-
-    return NextResponse.json<StatusPayload>({
-      status: 'SUCCEEDED',
-      progress: 100,
-      // modelUrl signals mock mode to the viewer — no real GLB is fetched
-      modelUrl: 'mock://placeholder',
-      mock: true,
-    })
   }
 
-  try {
-    const task = await fetchTaskStatus(meta.meshyTaskId)
-    const payload: StatusPayload = {
-      status: task.status,
-      progress: task.progress,
-      modelUrl: task.model_urls?.glb,
-      error: task.task_error?.message,
-    }
-    return NextResponse.json(payload)
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'Status check failed'
-    return NextResponse.json({ error: message }, { status: 502 })
+  const payload: StatusPayload = {
+    phase: meta.phase,
+    progress: meta.progress,
+    viewUrls,
+    analysis: meta.analysis,
+    meshStatus,
+    modelUrl,
+    mock: meta.mock,
+    error: meta.error,
   }
+
+  return NextResponse.json(payload)
 }

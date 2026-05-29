@@ -1,39 +1,50 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { v4 as uuidv4 } from 'uuid'
-import { loadMeta, saveMeta } from '@/lib/storage'
-import { createImageTo3DTask } from '@/lib/meshy'
+/**
+ * POST /api/generate
+ *
+ * Body: { jobId: string, wantMesh?: boolean }
+ *
+ * Patches the job meta with wantMesh, then fires the background pipeline
+ * (startJob) WITHOUT awaiting it, and returns 202 immediately.
+ * The client polls /api/status/<id> to track progress.
+ */
+export const runtime = 'nodejs'
 
-const MOCK_MODE = !process.env.MESHY_API_KEY
+import { NextRequest, NextResponse } from 'next/server'
+import { loadMeta, patchMeta } from '@/lib/storage'
+import { startJob } from '@/lib/job-runner'
 
 export async function POST(request: NextRequest) {
-  const body = await request.json().catch(() => null)
-  const jobId = typeof body?.jobId === 'string' ? body.jobId : null
+  let body: unknown
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+  }
+
+  const jobId =
+    body !== null && typeof body === 'object' && 'jobId' in body && typeof (body as Record<string, unknown>).jobId === 'string'
+      ? (body as Record<string, unknown>).jobId as string
+      : null
+
   if (!jobId) {
     return NextResponse.json({ error: 'jobId is required' }, { status: 400 })
   }
 
-  let meta = await loadMeta(jobId).catch(() => null)
+  const wantMesh =
+    body !== null && typeof body === 'object' && 'wantMesh' in body
+      ? Boolean((body as Record<string, unknown>).wantMesh)
+      : false
+
+  const meta = await loadMeta(jobId).catch(() => null)
   if (!meta) {
     return NextResponse.json({ error: 'Job not found' }, { status: 404 })
   }
 
-  if (MOCK_MODE) {
-    const meshyTaskId = `mock_${uuidv4()}`
-    await saveMeta(jobId, { ...meta, meshyTaskId, mock: true })
-    return NextResponse.json({ taskId: meshyTaskId, mock: true })
-  }
+  // Persist the wantMesh preference before kicking off the runner.
+  await patchMeta(jobId, { wantMesh })
 
-  // Build absolute photo URLs for Meshy (requires public access in production)
-  const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
-  const slots = ['front', 'back', 'left', 'right']
-  const imageUrls = slots.map((s) => `${base}/api/photos/${jobId}/${s}`)
+  // Fire-and-forget — do NOT await.
+  startJob(jobId)
 
-  try {
-    const meshyTaskId = await createImageTo3DTask(imageUrls)
-    await saveMeta(jobId, { ...meta, meshyTaskId, mock: false })
-    return NextResponse.json({ taskId: meshyTaskId })
-  } catch (err) {
-    const message = err instanceof Error ? err.message : 'Generation request failed'
-    return NextResponse.json({ error: message }, { status: 502 })
-  }
+  return NextResponse.json({ started: true, mock: meta.mock }, { status: 202 })
 }

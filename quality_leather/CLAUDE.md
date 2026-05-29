@@ -3,19 +3,24 @@
 ## Product vision
 
 Users upload 4 photos (front / back / left / right) of a garment they love.
-Meshy AI generates a 3D model. The user sees a rotatable leather-textured preview.
-The 3D model + a paper pattern / tech pack goes to a tailor who sources leather and produces the finished piece.
+The app generates a **leather-restyled, drag-to-spin preview** of that garment.
+Optionally, a true 3D model is also produced. The preview + a paper pattern /
+tech pack goes to a tailor who sources leather and produces the finished piece.
 
-v0 ships only the core "magic moment": upload → 3D preview.
+v0 ships only the core "magic moment": upload → leather turntable preview.
 
 ---
 
-## v0 scope (built)
+## v0.2 scope (built) — Gemini hybrid
 
-- 4-photo upload widget (drag-and-drop, client-side validation, server-side validation)
-- Meshy AI Image-to-3D v2 integration
-- Rotatable react-three-fiber 3D viewer
-- Mock mode when `MESHY_API_KEY` is unset: full UI flow with placeholder geometry
+- 4-photo upload widget (drag-and-drop, client + server validation)
+- **Gemini multimodal garment analysis** (`gemini-2.5-flash`)
+- **Nano Banana Pro turntable** (`gemini-3-pro-image-preview`): N consistent
+  leather-restyled views → drag-to-spin viewer (the primary preview)
+- **Optional background Meshy mesh** (hybrid) → "3D mesh" tab when a GLB is ready
+- Background job runner with progressive frame streaming
+- Mock mode when `GEMINI_API_KEY` is unset: the 4 uploaded photos become the
+  turntable frames — full UI flow with no external call
 
 ## Out of scope (not started)
 
@@ -33,58 +38,84 @@ v0 ships only the core "magic moment": upload → 3D preview.
 
 | Concern | Choice | Why |
 |---|---|---|
-| Framework | Next.js 14 App Router | Server components, file-based routing, API routes in one repo |
-| Styling | Tailwind CSS — utility classes only, no custom CSS | Fast iteration, no stylesheet drift |
-| 3D | @react-three/fiber + @react-three/drei | Idiomatic React API over Three.js |
-| 3D generation | Meshy AI v2 image-to-3d | Best-in-class garment-friendly image-to-3D, REST API |
-| Storage | Local `tmp/` directory | Zero-config for v0; swap for S3 (`src/lib/storage.ts`) |
+| Framework | Next.js 14 App Router | Server components, file routing, API routes in one repo |
+| Styling | Tailwind CSS — utility classes only | Fast iteration, no stylesheet drift |
+| Garment analysis | Gemini `gemini-2.5-flash` via `@google/genai` | Multimodal; grounds the restyle prompts + future tech pack |
+| Leather preview | Nano Banana Pro `gemini-3-pro-image-preview` | SOTA identity-preserving multi-view image gen → turntable |
+| 3D mesh (optional) | Meshy AI v2 image-to-3d | True GLB for the tailor handoff; runs in the background |
+| 3D viewer | @react-three/fiber + @react-three/drei | Idiomatic React over Three.js |
+| Storage | Local `tmp/` directory | Zero-config for v0; swap for S3 in `src/lib/storage.ts` |
 | Auth | None in v0 | — |
+
+### Why Gemini instead of Meshy as primary?
+
+Gemini image models (Nano Banana / Pro) generate **2D images, not 3D meshes** —
+they can't be a drop-in Meshy replacement. But for the v0 "magic moment" an
+AI-generated multi-view *turntable* is faster, cheaper, and more photorealistic
+for leather texture than a generated mesh. Meshy is kept as an optional
+background mesh for the eventual tailor handoff (the hybrid).
 
 ---
 
-## Key implementation details
+## Architecture
+
+### Shared contract — `src/lib/types.ts`
+
+`Phase`, `GarmentAnalysis`, `JobMeta`, `StatusPayload`, `TARGET_VIEW_COUNT`.
+SINGLE SOURCE OF TRUTH for job/status shapes — both API routes and the frontend
+import from here. The result page imports `StatusPayload` from `@/lib/types`
+(NOT from the status route).
 
 ### Server vs client
 
-- All `src/app/` pages are server components by default.
-- `'use client'` only where required: `PhotoUpload.tsx`, `result/[id]/page.tsx`, `ModelViewer.tsx`.
-- `ModelViewer` is `dynamic(() => import(...), { ssr: false })` — Three.js requires the browser.
+- `src/app/` pages are server components by default.
+- `'use client'`: `PhotoUpload.tsx`, `TurntableViewer.tsx`, `result/[id]/page.tsx`, `ModelViewer.tsx`.
+- `ModelViewer` is `dynamic(() => import(...), { ssr: false })` — Three.js needs the browser.
 
 ### Job lifecycle
 
-1. `POST /api/upload` → validates 4 photos, generates UUID `jobId`, saves files to `tmp/<jobId>/<slot>.<ext>`, saves `meta.json`.
-2. `POST /api/generate` → reads `meta.json`, calls Meshy (or mocks), saves `meshyTaskId` + `mock` flag back to `meta.json`.
-3. `GET /api/status/<jobId>` → reads `meta.json`, polls Meshy (or advances mock timer), returns `{ status, progress, modelUrl }`.
-4. Result page polls every 2.5 s with `AbortController` cleanup.
+1. `POST /api/upload` → validates 4 photos, generates `jobId`, saves files to
+   `tmp/<jobId>/<slot>.<ext>`, writes `meta.json` with `{ phase:'pending', progress:0, views:[], mock:!GEMINI_API_KEY }`.
+2. `POST /api/generate { jobId, wantMesh? }` → `patchMeta({ wantMesh })`,
+   fire-and-forget `startJob(jobId)` (NOT awaited), returns `202 { started, mock }`.
+3. `src/lib/job-runner.ts` runs the pipeline, `patchMeta`-ing progress:
+   - **mock**: copies the 4 photos into `view_00..07` (spin order front/right/back/left), progressive delays, then `succeeded`.
+   - **real**: `analyzing` (Gemini analysis) → `rendering` (loop `TARGET_VIEW_COUNT` angles via Nano Banana Pro, append each frame to `views`) → `succeeded`. On error → `failed` + `error`.
+   - if `wantMesh && MESHY_API_KEY`: also starts a Meshy task; status polls it.
+4. `GET /api/status/<jobId>` → builds `viewUrls` from `meta.views`, best-effort polls Meshy, returns `StatusPayload`.
+5. `GET /api/views/<jobId>/<index>` → serves the frame at `meta.views[index]` (path-traversal guarded).
+6. Result page polls every ~2.5 s (AbortController), renders the turntable as frames stream in.
 
-### Mock mode
+### Gemini (`src/lib/gemini.ts`)
 
-- Active when `MESHY_API_KEY` is unset.
-- `/api/generate` returns `{ taskId: "mock_<uuid>", mock: true }`.
-- `/api/status` uses an in-process `Map<taskId, createdAt>` to simulate 6 s of progress, then returns `SUCCEEDED` with `modelUrl: "mock://placeholder"`.
-- `ModelViewer` receives `isMock: true` and renders a slowly-rotating leather-coloured box instead of fetching a GLB.
+- Client: `new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })` (`@google/genai` v2.7).
+- Model IDs are named constants (`ANALYSIS_MODEL`, `RENDER_MODEL`) for easy swapping.
+- `analyzeGarment(photos)` → `gemini-2.5-flash`, returns strict-JSON `GarmentAnalysis` (parsed defensively).
+- `generateLeatherView(photos, analysis, viewSpec)` → `gemini-3-pro-image-preview` with `inlineData` reference photos + `config.imageConfig.aspectRatio`; extracts the image from `response.candidates[].content.parts[].inlineData`.
 
-### Meshy API
+### Keys & safety
 
-- Base URL: `https://api.meshy.ai`
-- Create: `POST /v2/image-to-3d` — `{ image_url, ai_model: "meshy-4", enable_pbr: true }`
-- Poll: `GET /v2/image-to-3d/<task_id>`
-- Status values: `PENDING | IN_PROGRESS | SUCCEEDED | FAILED | EXPIRED`
-- On success: `task.model_urls.glb` is a signed CDN URL to the GLB file.
-- Currently sends only the front-view photo as primary. Multi-view support can be added when confirmed available on the plan.
+`GEMINI_API_KEY` / `MESHY_API_KEY` are **server-only** — never sent to the
+client, never committed. Keep `.env.local` gitignored; ship `.env.example`.
 
-### Photo serving
+---
 
-`GET /api/photos/<jobId>/<slot>` reads from `tmp/` and returns the image with the correct MIME type. This URL is used to build absolute URLs for the Meshy API in production (set `NEXT_PUBLIC_BASE_URL`).
+## Known limitation — background work on serverless
+
+`startJob` runs in-process and isn't awaited by the route. This is fine for
+local dev and a long-running Node server, but on serverless (e.g. Vercel
+functions) the work is killed once the `202` response returns. Before deploying,
+move the pipeline to a queue/worker (e.g. a durable task runner) and have
+`/api/status` read shared state.
 
 ---
 
 ## What to build next (priority order)
 
 1. **Measurements form** — height, chest, waist, hips; saved alongside `meta.json`
-2. **Tech pack PDF** — generate from 3D model metadata + measurements
-3. **S3 storage** — replace `tmp/` in `src/lib/storage.ts` with S3 SDK calls
-4. **Auth** — Clerk or NextAuth (add after storage is stable)
-5. **Payment flow** — Stripe; charge after 3D preview is approved
-6. **Order tracking** — status page for tailor workflow
-7. **Email notifications** — Resend or Postmark for order updates
+2. **Tech pack PDF** — generate from the garment analysis + measurements
+3. **Durable job queue** — replace in-process `startJob` for serverless deploy
+4. **S3 storage** — replace `tmp/` in `src/lib/storage.ts`
+5. **Auth** — Clerk or NextAuth
+6. **Payment flow** — Stripe; charge after preview is approved
+7. **Order tracking + email** — tailor workflow status + notifications
