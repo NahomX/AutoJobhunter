@@ -1,26 +1,28 @@
 /**
- * Home page — minimal placeholder that compiles cleanly.
- * The frontend agent will replace this with the real guide + chat UI.
+ * Home page — server component that renders:
+ *   1. PropertyHeader (server-rendered, no client state needed)
+ *   2. GuideSection (client component, category tab state)
+ *   3. ChatSection (client component, useChat streaming)
  */
 import type { Guide } from "@/lib/guide";
 import guideData from "@/data/guide.json";
+import PropertyHeader from "@/components/PropertyHeader";
+import GuideSection from "@/components/GuideSection";
+import ChatSection from "@/components/ChatSection";
 
 const guide = guideData as Guide;
 
 export default function Home() {
   return (
-    <main style={{ padding: "2rem", maxWidth: "640px", margin: "0 auto" }}>
-      <h1 style={{ fontSize: "1.5rem", fontWeight: 700, marginBottom: "0.5rem" }}>
-        {guide.property.name !== "{{PROPERTY_NAME}}"
-          ? guide.property.name
-          : "Barrio Logan Guest Concierge"}
-      </h1>
-      <p style={{ color: "#555", marginBottom: "1.5rem" }}>
-        {guide.property.address} &mdash; {guide.property.neighborhood}
-      </p>
-      <p style={{ color: "#888", fontSize: "0.9rem" }}>
-        Placeholder home page. The frontend agent will build the real guide and chat UI here.
-      </p>
-    </main>
+    <div className="page-wrapper">
+      {/* 1. Property info — name, WiFi, check-in/out, house rules */}
+      <PropertyHeader property={guide.property} />
+
+      {/* 2. Local guide — category tabs + place cards */}
+      <GuideSection categories={guide.categories} />
+
+      {/* 3. AI concierge chat */}
+      <ChatSection />
+    </div>
   );
 }
