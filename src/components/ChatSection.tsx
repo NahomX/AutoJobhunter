@@ -19,9 +19,15 @@ import { DefaultChatTransport } from "ai";
 import {
   getQuestionsRemaining,
   recordQuestion,
+  refundQuestion,
   MAX_QUESTIONS_PER_DAY,
   OUT_OF_QUOTA_MESSAGE,
 } from "@/lib/rate-limit";
+
+/** Warm, guest-facing copy shown when a concierge reply fails to come back. */
+const CHAT_ERROR_MESSAGE =
+  "Sorry — I couldn't reach the concierge just now. That one's on me, so it didn't " +
+  "use up a question. Give it another try in a moment.";
 
 /** Extract plain text from a UIMessage's parts array. */
 function getMessageText(
@@ -53,27 +59,46 @@ export default function ChatSection() {
   // Set up the chat. /api/chat returns a UI message stream so we use DefaultChatTransport.
   // We pass outOfQuota in the body so the server can short-circuit gracefully.
   // body is an object merged into the POST body alongside `messages`.
+  // Tracks whether the in-flight send was optimistically counted against quota,
+  // so the slot is refunded exactly once if the request ultimately fails.
+  const pendingChargedRef = useRef(false);
+
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
       body: { outOfQuota },
     }),
+    // Refund the optimistic quota charge when a send fails, so a failed
+    // question never costs the guest a slot.
+    onError: () => {
+      if (pendingChargedRef.current) {
+        pendingChargedRef.current = false;
+        setRemaining(refundQuestion());
+      }
+    },
+    // Send succeeded — keep the charge.
+    onFinish: () => {
+      pendingChargedRef.current = false;
+    },
   });
 
   const isLoading = status === "submitted" || status === "streaming";
+  const isError = status === "error";
 
-  // Auto-scroll to the latest message
+  // Auto-scroll to the latest message (including the error bubble)
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isLoading]);
+  }, [messages, isLoading, isError]);
 
   const handleSend = useCallback(async () => {
     const text = inputText.trim();
     if (!text || isLoading || outOfQuota) return;
 
-    // Record question before sending so the UI updates immediately
+    // Record question before sending so the UI updates immediately.
+    // Mark it pending so a failed send can refund the slot (see the status effect).
     const newRemaining = recordQuestion();
     setRemaining(newRemaining);
+    pendingChargedRef.current = true;
     setInputText("");
 
     await sendMessage({ text });
@@ -154,6 +179,19 @@ export default function ChatSection() {
                 <span className="typing-indicator__dot" />
                 <span className="typing-indicator__dot" />
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Error bubble — surfaced when the concierge reply fails */}
+        {isError && (
+          <div
+            className="chat-message chat-message--assistant chat-message--error"
+            role="alert"
+          >
+            <div className="chat-message__avatar" aria-hidden="true">🏡</div>
+            <div className="chat-message__bubble chat-message__bubble--error">
+              {CHAT_ERROR_MESSAGE}
             </div>
           </div>
         )}

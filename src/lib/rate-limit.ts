@@ -79,3 +79,14 @@ export function recordQuestion(): number {
   writeUsedToday(used);
   return Math.max(0, MAX_QUESTIONS_PER_DAY - used);
 }
+
+/**
+ * Give back one question and return the NEW remaining count. Call this when a
+ * send that was optimistically recorded via recordQuestion() ultimately fails,
+ * so a failed question never costs the guest a slot. Clamped at 0..MAX.
+ */
+export function refundQuestion(): number {
+  const used = Math.max(0, readUsedToday() - 1);
+  writeUsedToday(used);
+  return Math.max(0, MAX_QUESTIONS_PER_DAY - used);
+}

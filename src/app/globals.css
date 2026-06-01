@@ -449,6 +449,13 @@ body {
   border-bottom-left-radius: 4px;
 }
 
+/* Error bubble — failed concierge reply (warm, non-alarming) */
+.chat-message__bubble--error {
+  background: #fdf0e6;
+  color: #8a4b2a;
+  border: 1px solid #f0cba8;
+}
+
 .chat-message__avatar {
   width: 28px;
   height: 28px;
