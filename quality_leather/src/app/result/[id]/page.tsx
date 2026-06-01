@@ -5,14 +5,33 @@ import { useParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import type { StatusPayload } from '@/lib/types'
+import { TARGET_VIEW_COUNT } from '@/lib/types'
 import TurntableViewer from '@/components/TurntableViewer'
 
 // ModelViewer can't SSR — three.js requires the browser
 const ModelViewer = dynamic(() => import('@/components/ModelViewer'), { ssr: false })
 
 const POLL_INTERVAL_MS = 2_000
+// Consecutive failed polls tolerated before giving up — absorbs transient
+// blips (network drops, 5xx, the brief 404 window during a meta read-modify-write).
+const MAX_CONSECUTIVE_ERRORS = 5
 
 type PreviewTab = 'turntable' | 'mesh'
+
+/** Sleep that resolves early if the poll is aborted (page unmount / nav). */
+function abortableDelay(ms: number, signal: AbortSignal): Promise<void> {
+  return new Promise<void>((resolve) => {
+    const t = setTimeout(resolve, ms)
+    signal.addEventListener(
+      'abort',
+      () => {
+        clearTimeout(t)
+        resolve()
+      },
+      { once: true },
+    )
+  })
+}
 
 export default function ResultPage() {
   const params = useParams()
@@ -24,38 +43,46 @@ export default function ResultPage() {
 
   const poll = useCallback(
     async (signal: AbortSignal) => {
+      let consecutiveErrors = 0
+
       while (!signal.aborted) {
         let payload: StatusPayload
         try {
           const res = await fetch(`/api/status/${jobId}`, { signal, cache: 'no-store' })
           if (!res.ok) {
             const body = await res.json().catch(() => ({}))
-            setPollError((body as { error?: string }).error ?? 'Status check failed')
-            return
+            const message =
+              (body as { error?: string }).error ?? `Status check failed (${res.status})`
+            throw new Error(message)
           }
           payload = (await res.json()) as StatusPayload
         } catch (err) {
-          if ((err as Error).name !== 'AbortError')
-            setPollError('Network error while checking status')
-          return
+          if ((err as Error).name === 'AbortError') return
+          // Transient failure — retry a few times before giving up, so a single
+          // blip doesn't permanently freeze the UI on a job that's still running.
+          consecutiveErrors += 1
+          if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
+            setPollError((err as Error).message || 'Network error while checking status')
+            return
+          }
+          await abortableDelay(POLL_INTERVAL_MS, signal)
+          continue
         }
 
+        consecutiveErrors = 0
+        setPollError(null)
         setStatus(payload)
 
+        // Stop at a terminal phase — but keep polling past 'succeeded' while an
+        // optional mesh is still being produced, so the 3D mesh tab can appear.
         if (
-          payload.phase === 'succeeded' ||
-          payload.phase === 'failed'
+          payload.phase === 'failed' ||
+          (payload.phase === 'succeeded' && !payload.meshPending)
         ) {
           return
         }
 
-        await new Promise<void>((resolve) => {
-          const t = setTimeout(resolve, POLL_INTERVAL_MS)
-          signal.addEventListener('abort', () => {
-            clearTimeout(t)
-            resolve()
-          })
-        })
+        await abortableDelay(POLL_INTERVAL_MS, signal)
       }
     },
     [jobId],
@@ -86,7 +113,7 @@ export default function ResultPage() {
     if (p === 'analyzing') return 'Analyzing your garment…'
     if (p === 'rendering') {
       const done = viewUrls?.length ?? 0
-      return `Rendering leather views… ${done}/8`
+      return `Rendering leather views… ${done}/${TARGET_VIEW_COUNT}`
     }
     return `Generating your leather preview… ${progress}%`
   }
@@ -146,7 +173,9 @@ export default function ResultPage() {
                 style={{ width: `${Math.max(4, status?.progress ?? 0)}%` }}
               />
             </div>
-            <TurntableViewer viewUrls={status!.viewUrls} />
+            {/* No auto-spin while frames are still streaming in — partial
+                frames would flash by unreadably. */}
+            <TurntableViewer viewUrls={status!.viewUrls} autoSpin={false} />
           </div>
         )}
 

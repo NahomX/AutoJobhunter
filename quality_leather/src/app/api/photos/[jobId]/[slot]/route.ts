@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { readPhoto } from '@/lib/storage'
+import { readPhoto, isValidJobId } from '@/lib/storage'
 
 const EXT_TO_MIME: Record<string, string> = {
   jpg: 'image/jpeg',
@@ -14,6 +14,9 @@ export async function GET(
   { params }: { params: { jobId: string; slot: string } },
 ) {
   const { jobId, slot } = params
+  if (!isValidJobId(jobId)) {
+    return NextResponse.json({ error: 'Invalid job id' }, { status: 400 })
+  }
   const result = await readPhoto(jobId, slot)
   if (!result) {
     return NextResponse.json({ error: 'Photo not found' }, { status: 404 })

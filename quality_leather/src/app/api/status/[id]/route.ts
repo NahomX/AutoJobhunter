@@ -8,7 +8,7 @@
 export const runtime = 'nodejs'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { loadMeta, patchMeta } from '@/lib/storage'
+import { loadMeta, patchMeta, isValidJobId } from '@/lib/storage'
 import { fetchTaskStatus } from '@/lib/meshy'
 import type { StatusPayload, MeshStatus } from '@/lib/types'
 
@@ -17,6 +17,9 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   const jobId = params.id
+  if (!isValidJobId(jobId)) {
+    return NextResponse.json({ error: 'Invalid job id' }, { status: 400 })
+  }
   const meta = await loadMeta(jobId).catch(() => null)
   if (!meta) {
     return NextResponse.json({ error: 'Job not found' }, { status: 404 })
@@ -43,6 +46,17 @@ export async function GET(
     }
   }
 
+  // A mesh is "pending" when it was requested (real mode only) and hasn't
+  // reached a terminal state yet. The runner only kicks off Meshy AFTER the
+  // turntable succeeds, so the client must keep polling past 'succeeded' until
+  // this clears — otherwise the 3D mesh tab would never appear.
+  const meshExpected = !!meta.wantMesh && !meta.mock
+  const meshTerminal =
+    meshStatus === 'SUCCEEDED' ||
+    meshStatus === 'FAILED' ||
+    meshStatus === 'EXPIRED'
+  const meshPending = meshExpected && !meshTerminal
+
   const payload: StatusPayload = {
     phase: meta.phase,
     progress: meta.progress,
@@ -50,6 +64,7 @@ export async function GET(
     analysis: meta.analysis,
     meshStatus,
     modelUrl,
+    meshPending,
     mock: meta.mock,
     error: meta.error,
   }

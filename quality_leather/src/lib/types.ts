@@ -85,6 +85,12 @@ export interface StatusPayload {
   /** optional background mesh */
   meshStatus?: MeshStatus;
   modelUrl?: string;
+  /**
+   * True when a mesh was requested and is still being produced (not yet in a
+   * terminal state). The client keeps polling past phase 'succeeded' while this
+   * is true, so the 3D mesh tab can appear once the mesh finishes.
+   */
+  meshPending?: boolean;
   mock: boolean;
   error?: string;
 }

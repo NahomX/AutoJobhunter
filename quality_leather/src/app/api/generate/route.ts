@@ -10,7 +10,7 @@
 export const runtime = 'nodejs'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { loadMeta, patchMeta } from '@/lib/storage'
+import { loadMeta, patchMeta, isValidJobId } from '@/lib/storage'
 import { startJob } from '@/lib/job-runner'
 
 export async function POST(request: NextRequest) {
@@ -28,6 +28,9 @@ export async function POST(request: NextRequest) {
 
   if (!jobId) {
     return NextResponse.json({ error: 'jobId is required' }, { status: 400 })
+  }
+  if (!isValidJobId(jobId)) {
+    return NextResponse.json({ error: 'Invalid jobId' }, { status: 400 })
   }
 
   const wantMesh =

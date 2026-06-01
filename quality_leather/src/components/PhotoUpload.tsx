@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, DragEvent, ChangeEvent } from 'react'
+import { useState, useRef, useEffect, DragEvent, ChangeEvent } from 'react'
 import { useRouter } from 'next/navigation'
 
 const SLOTS = [
@@ -24,6 +24,17 @@ export default function PhotoUpload() {
   const [wantMesh, setWantMesh] = useState(false)
   const refs = useRef<Record<SlotKey, HTMLInputElement | null>>({ front: null, back: null, left: null, right: null })
 
+  // Revoke any outstanding object URLs on unmount to avoid leaking blob memory.
+  const previewsRef = useRef(previews)
+  previewsRef.current = previews
+  useEffect(() => {
+    return () => {
+      Object.values(previewsRef.current).forEach((url) => {
+        if (url) URL.revokeObjectURL(url)
+      })
+    }
+  }, [])
+
   function setFile(slot: SlotKey, file: File) {
     const ALLOWED = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
     if (!ALLOWED.includes(file.type)) {
@@ -37,7 +48,11 @@ export default function PhotoUpload() {
     setError(null)
     setPhotos((p) => ({ ...p, [slot]: file }))
     const url = URL.createObjectURL(file)
-    setPreviews((p) => ({ ...p, [slot]: url }))
+    setPreviews((p) => {
+      // Replacing a slot — release the previous preview's blob URL first.
+      if (p[slot]) URL.revokeObjectURL(p[slot]!)
+      return { ...p, [slot]: url }
+    })
   }
 
   function onDrop(slot: SlotKey, e: DragEvent<HTMLDivElement>) {
@@ -49,6 +64,8 @@ export default function PhotoUpload() {
   function onChange(slot: SlotKey, e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (file) setFile(slot, file)
+    // Reset so re-selecting the SAME file in a slot still fires onChange.
+    e.target.value = ''
   }
 
   async function submit() {

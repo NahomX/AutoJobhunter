@@ -8,7 +8,7 @@
 export const runtime = 'nodejs'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { loadMeta, readView } from '@/lib/storage'
+import { loadMeta, readView, isValidJobId } from '@/lib/storage'
 
 const EXT_TO_MIME: Record<string, string> = {
   jpg: 'image/jpeg',
@@ -23,6 +23,10 @@ export async function GET(
   { params }: { params: { jobId: string; index: string } },
 ) {
   const { jobId, index: indexStr } = params
+
+  if (!isValidJobId(jobId)) {
+    return NextResponse.json({ error: 'Invalid job id' }, { status: 400 })
+  }
 
   // Validate index is a non-negative integer.
   const index = parseInt(indexStr, 10)

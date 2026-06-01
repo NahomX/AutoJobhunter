@@ -4,18 +4,23 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 
 interface TurntableViewerProps {
   viewUrls: string[]
+  /** Auto-rotate while idle until the user interacts. Default true. */
+  autoSpin?: boolean
 }
 
 // How many pixels of horizontal drag map to one full revolution
 const DRAG_PIXELS_PER_REVOLUTION = 300
 
-// Auto-advance frame interval in ms (when idle)
-const AUTO_ADVANCE_MS = 120
+// Auto-advance frame interval in ms (when idle). ~350ms/frame keeps the spin
+// readable rather than a blurry ~1 rev/sec.
+const AUTO_ADVANCE_MS = 350
 
-export default function TurntableViewer({ viewUrls }: TurntableViewerProps) {
+export default function TurntableViewer({ viewUrls, autoSpin = true }: TurntableViewerProps) {
   const [frameIndex, setFrameIndex] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const [showHint, setShowHint] = useState(true)
+  // Once the user spins/scrubs manually, stop auto-rotating — respect their intent.
+  const [hasInteracted, setHasInteracted] = useState(false)
 
   // Keep a ref to the current frameIndex for use inside event handlers
   const frameIndexRef = useRef(0)
@@ -36,17 +41,20 @@ export default function TurntableViewer({ viewUrls }: TurntableViewerProps) {
     })
   }, [viewUrls])
 
-  // Auto-advance when idle
+  // Auto-advance when idle — only until the user takes manual control.
   useEffect(() => {
-    if (frameCount <= 1 || isDragging) return
+    if (!autoSpin || hasInteracted || frameCount <= 1 || isDragging) return
     const timer = setInterval(() => {
       setFrameIndex((i) => (i + 1) % frameCount)
     }, AUTO_ADVANCE_MS)
     return () => clearInterval(timer)
-  }, [frameCount, isDragging])
+  }, [autoSpin, hasInteracted, frameCount, isDragging])
 
-  // Dismiss hint on first interaction
-  const dismissHint = useCallback(() => setShowHint(false), [])
+  // Dismiss hint + stop auto-spin on first manual interaction
+  const dismissHint = useCallback(() => {
+    setShowHint(false)
+    setHasInteracted(true)
+  }, [])
 
   // --- Pointer / mouse drag ---
   const onPointerDown = useCallback(

@@ -50,10 +50,16 @@ async function runMock(jobId: string): Promise<void> {
 
   const frameCount = Math.min(TARGET_VIEW_COUNT, MOCK_SPIN_SLOTS.length)
 
+  // Reuse the last successfully-read photo if a slot is missing, so a single
+  // unreadable slot can't shrink the turntable below frameCount.
+  type Photo = { buffer: Buffer; ext: string }
+  let lastPhoto: Photo | null = null
+
   for (let i = 0; i < frameCount; i++) {
     const slot = MOCK_SPIN_SLOTS[i]
-    const photo = await readPhoto(jobId, slot)
+    const photo: Photo | null = (await readPhoto(jobId, slot)) ?? lastPhoto
     if (!photo) continue
+    lastPhoto = photo
 
     const filename = await saveView(jobId, i, photo.buffer, photo.ext)
 
@@ -114,15 +120,23 @@ async function runReal(jobId: string): Promise<void> {
 
   // --- Step 4: Optional Meshy mesh (fire-and-forget background task) ---
   const meta = await loadMeta(jobId)
-  if (meta.wantMesh && process.env.MESHY_API_KEY) {
-    try {
-      const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
-      const imageUrls = slots.map((s) => `${base}/api/photos/${jobId}/${s}`)
-      const meshyTaskId = await createImageTo3DTask(imageUrls)
-      await patchMeta(jobId, { meshyTaskId, meshStatus: 'IN_PROGRESS' })
-    } catch (meshErr) {
-      // Mesh failure must not affect the main result — log and continue.
-      console.error(`[job-runner] Meshy task failed for ${jobId}:`, meshErr)
+  if (meta.wantMesh) {
+    if (process.env.MESHY_API_KEY) {
+      try {
+        const base = process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'
+        const imageUrls = slots.map((s) => `${base}/api/photos/${jobId}/${s}`)
+        const meshyTaskId = await createImageTo3DTask(imageUrls)
+        await patchMeta(jobId, { meshyTaskId, meshStatus: 'IN_PROGRESS' })
+      } catch (meshErr) {
+        // Mesh failure must not affect the main result — log and mark terminal
+        // so the client stops waiting on a mesh that never started.
+        console.error(`[job-runner] Meshy task failed for ${jobId}:`, meshErr)
+        await patchMeta(jobId, { meshStatus: 'FAILED' }).catch(() => undefined)
+      }
+    } else {
+      // Mesh was requested but no Meshy key is configured — it can't be
+      // produced, so resolve it as terminal rather than leaving it pending.
+      await patchMeta(jobId, { meshStatus: 'FAILED' }).catch(() => undefined)
     }
   }
 }
