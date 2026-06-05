@@ -1,0 +1,19 @@
+{
+  "name": "quality-leather-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Example MCP server wrapping the Quality Leather pipeline (garment analysis + leather-view generation) as agent-callable tools. Standalone — does not affect the Next.js app.",
+  "bin": {
+    "quality-leather-mcp": "src/server.mjs"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "demo": "node src/test-client.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@google/genai": "^2.7.0",
+    "zod": "^4.4.3"
+  }
+}
